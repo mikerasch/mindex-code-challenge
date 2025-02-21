@@ -1,4 +1,6 @@
 package com.mindex.challenge.models.employee.reporting;
 
+import jakarta.annotation.Nonnull;
+
 public record ReportingStructureResponse(
-        EmployeeWithDirectReportResponse employeeResponse, int numberOfReports) {}
+        @Nonnull EmployeeWithDirectReportResponse employeeResponse, int numberOfReports) {}

@@ -1,6 +1,11 @@
 package com.mindex.challenge.models.employee;
 
+import jakarta.annotation.Nonnull;
 import java.util.UUID;
 
 public record EmployeeResponse(
-        UUID employeeId, String firstName, String lastName, String position, String department) {}
+        @Nonnull UUID employeeId,
+        @Nonnull String firstName,
+        @Nonnull String lastName,
+        @Nonnull String position,
+        @Nonnull String department) {}

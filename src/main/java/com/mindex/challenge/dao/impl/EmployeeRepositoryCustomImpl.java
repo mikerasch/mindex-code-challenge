@@ -3,10 +3,9 @@ package com.mindex.challenge.dao.impl;
 import com.mindex.challenge.dao.EmployeeRepositoryCustom;
 import com.mindex.challenge.entities.Compensation;
 import com.mindex.challenge.entities.Employee;
+import jakarta.annotation.Nonnull;
 import java.util.Set;
 import java.util.UUID;
-
-import jakarta.annotation.Nonnull;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -32,7 +31,8 @@ public class EmployeeRepositoryCustomImpl implements EmployeeRepositoryCustom {
      * @param compensations A set of {@link Compensation} objects to be added to the employee's compensations.
      */
     @Override
-    public void addCompensationsToEmployee(@Nonnull UUID employeeId, @Nonnull Set<Compensation> compensations) {
+    public void addCompensationsToEmployee(
+            @Nonnull UUID employeeId, @Nonnull Set<Compensation> compensations) {
         Query query = new Query(Criteria.where("employeeId").is(employeeId));
 
         Update update = new Update().push("compensations").each(compensations.toArray());
