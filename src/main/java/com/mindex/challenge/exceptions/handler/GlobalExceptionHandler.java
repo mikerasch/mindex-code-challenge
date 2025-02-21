@@ -22,6 +22,9 @@ public class GlobalExceptionHandler {
                 new ExceptionMessage(resourceNotFoundException.getMessage()), HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Handles Jakarta Validation Exception to 400 bad request.
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionMessage> handleValidationExceptions(
             ConstraintViolationException ex) {
