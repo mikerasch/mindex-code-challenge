@@ -1,18 +1,16 @@
 package com.mindex.challenge.config;
 
-import com.mindex.challenge.dao.EmployeeRepository;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import java.net.InetSocketAddress;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.lang.NonNull;
 
-import java.net.InetSocketAddress;
-
-@EnableMongoRepositories(basePackageClasses = EmployeeRepository.class)
 @Configuration
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
@@ -27,9 +25,13 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public MongoClient mongoClient() {
         MongoServer server = new MongoServer(new MemoryBackend());
         InetSocketAddress serverAddress = server.bind();
-        String mongoConnectionString = String.format("mongodb://%s:%d", serverAddress.getHostName(), serverAddress.getPort());
-        return MongoClients.create(mongoConnectionString);
+        String mongoConnectionString =
+                String.format(
+                        "mongodb://%s:%d", serverAddress.getHostName(), serverAddress.getPort());
+        MongoClientSettings settings =
+                MongoClientSettings.builder()
+                        .applyConnectionString(new ConnectionString(mongoConnectionString))
+                        .build();
+        return MongoClients.create(settings);
     }
 }
-
-

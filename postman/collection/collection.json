@@ -1,0 +1,517 @@
+{
+	"info": {
+		"_postman_id": "d71babe9-55ae-4b3b-9276-48d1041e4ca9",
+		"name": "mindex",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22659041"
+	},
+	"item": [
+		{
+			"name": "CRUD Employee Controller Endpoints",
+			"item": [
+				{
+					"name": "Validations",
+					"item": [
+						{
+							"name": "Create Employee Null present",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"POSTMAN_USERNAME\",\r\n    \"lastName\": \"POSTMAN_LASTNAME\",\r\n    \"position\": \"POSTMAN_DEV\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/employee",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"employee"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Body is equal\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"POSTMAN_USERNAME\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"POSTMAN_LASTNAME\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"POSTMAN_DEV\");\r",
+									"    pm.expect(jsonData.department).to.eql(\"IT\");\r",
+									"    pm.collectionVariables.set(\"employeeId\", jsonData.employeeId);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"POSTMAN_USERNAME\",\r\n    \"lastName\": \"POSTMAN_LASTNAME\",\r\n    \"position\": \"POSTMAN_DEV\",\r\n    \"department\": \"IT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Newly Created Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is equal\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"POSTMAN_USERNAME\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"POSTMAN_LASTNAME\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"POSTMAN_DEV\");\r",
+									"    pm.expect(jsonData.department).to.eql(\"IT\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update First Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is equal\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"UPDATED_POSTMAN_USER\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"POSTMAN_LASTNAME\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"POSTMAN_DEV\");\r",
+									"    pm.expect(jsonData.department).to.eql(\"IT\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"UPDATED_POSTMAN_USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Newly Updated Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is equal\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"UPDATED_POSTMAN_USER\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"POSTMAN_LASTNAME\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"POSTMAN_DEV\");\r",
+									"    pm.expect(jsonData.department).to.eql(\"IT\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Compensation",
+			"item": [
+				{
+					"name": "validations",
+					"item": [
+						{
+							"name": "Invalid Salary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"effectiveDate\": \"2025-01-01\",\r\n        \"salary\": 0\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/employee/{{employeeId}}/compensation",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"employee",
+										"{{employeeId}}",
+										"compensation"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Compensation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Test Body\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].effectiveDate).to.eql(\"2025-01-01\");\r",
+									"    pm.expect(jsonData[0].salary).to.eql(95000.01)\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"effectiveDate\": \"2025-01-01\",\r\n        \"salary\": 95000.01\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}/compensation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}",
+								"compensation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Newly Created Compensation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].effectiveDate).to.eql('2025-01-01');\r",
+									"    pm.expect(jsonData[0].salary).to.eql(95000.01)\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}/compensation",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}",
+								"compensation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reporting",
+			"item": [
+				{
+					"name": "Newly Created Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response matches expected structure excluding employeeId\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    var expectedResponse = {\r",
+									"        \"employeeResponse\": {\r",
+									"            \"firstName\": \"UPDATED_POSTMAN_USER\",\r",
+									"            \"lastName\": \"POSTMAN_LASTNAME\",\r",
+									"            \"position\": \"POSTMAN_DEV\",\r",
+									"            \"department\": \"IT\",\r",
+									"            \"directReports\": []\r",
+									"        },\r",
+									"        \"numberOfReports\": 0\r",
+									"    };\r",
+									"    pm.expect(jsonData.employeeResponse.firstName).to.eql(expectedResponse.employeeResponse.firstName);\r",
+									"    pm.expect(jsonData.employeeResponse.lastName).to.eql(expectedResponse.employeeResponse.lastName);\r",
+									"    pm.expect(jsonData.employeeResponse.position).to.eql(expectedResponse.employeeResponse.position);\r",
+									"    pm.expect(jsonData.employeeResponse.department).to.eql(expectedResponse.employeeResponse.department);\r",
+									"    pm.expect(jsonData.employeeResponse.directReports).to.eql(expectedResponse.employeeResponse.directReports);\r",
+									"    pm.expect(jsonData.numberOfReports).to.eql(expectedResponse.numberOfReports);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/employee/{{employeeId}}/direct-reports",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeId}}",
+								"direct-reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requirement Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Number of reports 4\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.numberOfReports).to.eql(4);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/employee/16a596ae-edd3-4847-99fe-c4518e82c86f/direct-reports",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"16a596ae-edd3-4847-99fe-c4518e82c86f",
+								"direct-reports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "employeeId",
+			"value": ""
+		}
+	]
+}
