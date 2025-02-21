@@ -26,7 +26,7 @@ class EmployeeReportingServiceImplTest {
         ReportingStructureResponse response = service.fetchDirectReports(UUID.randomUUID());
 
         Assertions.assertAll(
-                () -> Assertions.assertTrue(response.employeeResponse().directReports().isEmpty()),
+                () -> Assertions.assertTrue(response.employee().directReports().isEmpty()),
                 () -> Assertions.assertEquals(0, response.numberOfReports()));
     }
 
