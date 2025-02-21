@@ -21,6 +21,9 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build Spring Boot application With Tests
         run: |
           ./gradlew clean build
