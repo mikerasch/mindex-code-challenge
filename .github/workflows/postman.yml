@@ -24,9 +24,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Format
+        run: ./gradlew :spotlessApply
+
       - name: Build Spring Boot application With Tests
         run: |
           ./gradlew clean build
+        
 
       - name: Run Docker Compose
         uses: hoverkraft-tech/compose-action@v2.0.1
