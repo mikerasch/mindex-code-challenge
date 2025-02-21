@@ -10,10 +10,15 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeReportingServiceImpl implements EmployeeReportingService {
+    private static final Logger LOG = LoggerFactory.getLogger(EmployeeReportingServiceImpl.class);
+
     private final EmployeeService employeeService;
 
     public EmployeeReportingServiceImpl(EmployeeService employeeService) {
@@ -42,6 +47,7 @@ public class EmployeeReportingServiceImpl implements EmployeeReportingService {
         while (!employeeQueue.isEmpty()) {
             EmployeeWithDirectReportResponse underlingEmployee = employeeQueue.poll();
             if (seenEmployees.contains(underlingEmployee.employeeId())) {
+                LOG.info("While fetching direct reports for employee {}, an acyclic relationship was spotted.", employeeId);
                 continue;
             }
             seenEmployees.add(underlingEmployee.employeeId());

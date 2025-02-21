@@ -110,7 +110,7 @@ public class EmployeeController {
             @PathVariable UUID employeeId,
             @RequestBody EmployeeUpdateRequest employeeUpdateRequest) {
         LOG.debug(
-                "Received employee create request for employeeId [{}] and employee [{}]",
+                "Received employee update request for employeeId [{}] and employee [{}]",
                 employeeId,
                 employeeUpdateRequest);
 

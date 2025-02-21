@@ -12,13 +12,16 @@ import jakarta.annotation.Nonnull;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeCompensationServiceImpl implements EmployeeCompensationService {
     private final EmployeeService employeeService;
     private final CompensationRepository compensationRepository;
-
+    private static final Logger LOG = LoggerFactory.getLogger(EmployeeCompensationServiceImpl.class);
     public EmployeeCompensationServiceImpl(
             EmployeeService employeeService, CompensationRepository compensationRepository) {
         this.employeeService = employeeService;
@@ -42,6 +45,9 @@ public class EmployeeCompensationServiceImpl implements EmployeeCompensationServ
 
         compensationRepository.saveAll(compensations);
         employeeService.appendCompensations(employeeId, compensations);
+
+        LOG.info("Saved #{} compensations for employee with ID: {}", compensations.size(), employeeId);
+
         return buildEmployeeCompensationResponse(employeeId, compensations);
     }
 

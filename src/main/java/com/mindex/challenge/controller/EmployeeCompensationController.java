@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.Set;
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class EmployeeCompensationController {
     private final EmployeeCompensationService employeeCompensationService;
+    private static final Logger LOG = LoggerFactory.getLogger(EmployeeCompensationController.class);
 
     public EmployeeCompensationController(EmployeeCompensationService employeeCompensationService) {
         this.employeeCompensationService = employeeCompensationService;
@@ -64,6 +68,8 @@ public class EmployeeCompensationController {
     public Set<EmployeeCompensationResponse> createCompensationForEmployee(
             @PathVariable UUID employeeId,
             @RequestBody @Valid Set<EmployeeCompensationRequest> employeeCompensationRequest) {
+        LOG.debug("Received employee create compensation request for employeeId [{}]", employeeId);
+
         return employeeCompensationService.createCompensationForEmployee(
                 employeeId, employeeCompensationRequest);
     }
@@ -93,6 +99,7 @@ public class EmployeeCompensationController {
     @GetMapping("/{employeeId}/compensation")
     public Set<EmployeeCompensationResponse> fetchAllCompensationsForEmployee(
             @PathVariable UUID employeeId) {
+        LOG.debug("Received employee read compensation request for employeeId [{}]", employeeId);
         return employeeCompensationService.fetchAllCompensationsForEmployee(employeeId);
     }
 }
